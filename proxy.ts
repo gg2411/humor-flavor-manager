@@ -41,14 +41,14 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // Check superadmin for admin routes (and root)
+  // Check superadmin OR matrix_admin
   const { data: profile } = await supabase
     .from('profiles')
-    .select('is_superadmin')
+    .select('is_superadmin, is_matrix_admin')
     .eq('id', user.id)
     .single()
 
-  if (!profile?.is_superadmin) {
+  if (!profile?.is_superadmin && !profile?.is_matrix_admin) {
     const url = request.nextUrl.clone()
     url.pathname = '/unauthorized'
     return NextResponse.redirect(url)

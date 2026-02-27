@@ -41,72 +41,50 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[var(--background)] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-violet-600 rounded-2xl mb-4">
-            <span className="text-2xl">😂</span>
-          </div>
-          <h1 className="text-3xl font-bold text-white">Admin Portal</h1>
-          <p className="text-gray-400 mt-2">Humor Study · Superadmin Access Only</p>
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-violet-600 rounded-2xl mb-4 text-2xl">⚗️</div>
+          <h1 className="text-2xl font-bold text-[var(--foreground)]">Flavor Manager</h1>
+          <p className="text-[var(--muted)] mt-1 text-sm">Superadmin / Matrix Admin access only</p>
         </div>
 
-        {/* Card */}
-        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl p-8 shadow-xl">
           {error && (
-            <div className="mb-4 p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-sm">
+            <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-xl text-red-700 dark:text-red-300 text-sm">
               {error}
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="admin@example.com"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
-              />
+              <label className="block text-sm font-medium text-[var(--foreground)] mb-1">Email</label>
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@columbia.edu"
+                className="w-full px-4 py-2.5 bg-[var(--background)] border border-[var(--card-border)] rounded-xl text-[var(--foreground)] placeholder-[var(--muted)] focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition text-sm" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="••••••••"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition"
-              />
+              <label className="block text-sm font-medium text-[var(--foreground)] mb-1">Password</label>
+              <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••"
+                className="w-full px-4 py-2.5 bg-[var(--background)] border border-[var(--card-border)] rounded-xl text-[var(--foreground)] placeholder-[var(--muted)] focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition text-sm" />
             </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition"
-            >
+            <button type="submit" disabled={loading}
+              className="w-full py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-50 text-white font-semibold rounded-xl transition text-sm">
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
-          <div className="relative my-6">
+          <div className="relative my-5">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-700" />
+              <div className="w-full border-t border-[var(--card-border)]" />
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-3 bg-gray-900 text-gray-500">or</span>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-3 bg-[var(--card)] text-[var(--muted)]">or</span>
             </div>
           </div>
 
-          <button
-            onClick={handleGoogleLogin}
-            disabled={loading}
-            className="w-full py-3 bg-gray-800 hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-700 text-white font-semibold rounded-xl flex items-center justify-center gap-3 transition"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
+          <button onClick={handleGoogleLogin} disabled={loading}
+            className="w-full py-2.5 bg-[var(--background)] hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-50 border border-[var(--card-border)] text-[var(--foreground)] font-medium rounded-xl flex items-center justify-center gap-3 transition text-sm">
+            <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
@@ -115,10 +93,6 @@ export default function LoginPage() {
             Continue with Google
           </button>
         </div>
-
-        <p className="text-center text-gray-600 text-xs mt-6">
-          Only superadmin users can access this portal
-        </p>
       </div>
     </div>
   )
