@@ -28,7 +28,7 @@ interface HumorFlavorStep {
 }
 
 interface LLMModel { id: number; name: string }
-interface RefItem { id: number; name: string }
+interface RefItem { id: number; slug: string }
 interface DBImage { id: string; url?: string; description?: string }
 interface Caption { id: number; content: string; created_datetime_utc?: string }
 
@@ -87,21 +87,21 @@ function StepForm({
           <label className={labelClass}>Input Type</label>
           <select value={form.llm_input_type_id} onChange={e => setForm(f => ({ ...f, llm_input_type_id: e.target.value }))} className={inputClass}>
             <option value="">— Select —</option>
-            {inputTypes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+            {inputTypes.map(t => <option key={t.id} value={t.id}>{t.slug}</option>)}
           </select>
         </div>
         <div>
           <label className={labelClass}>Output Type</label>
           <select value={form.llm_output_type_id} onChange={e => setForm(f => ({ ...f, llm_output_type_id: e.target.value }))} className={inputClass}>
             <option value="">— Select —</option>
-            {outputTypes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+            {outputTypes.map(t => <option key={t.id} value={t.id}>{t.slug}</option>)}
           </select>
         </div>
         <div className="col-span-2 sm:col-span-1">
           <label className={labelClass}>Step Type</label>
           <select value={form.humor_flavor_step_type_id} onChange={e => setForm(f => ({ ...f, humor_flavor_step_type_id: e.target.value }))} className={inputClass}>
             <option value="">— Select —</option>
-            {stepTypes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+            {stepTypes.map(t => <option key={t.id} value={t.id}>{t.slug}</option>)}
           </select>
         </div>
       </div>
@@ -205,9 +205,9 @@ export default function FlavorEditorPage() {
   const fetchRefData = useCallback(async () => {
     const [{ data: m }, { data: it }, { data: ot }, { data: st }] = await Promise.all([
       supabase.from('llm_models').select('id, name').order('name'),
-      supabase.from('llm_input_types').select('id, name').order('name'),
-      supabase.from('llm_output_types').select('id, name').order('name'),
-      supabase.from('humor_flavor_step_types').select('id, name').order('name'),
+      supabase.from('llm_input_types').select('id, slug').order('slug'),
+      supabase.from('llm_output_types').select('id, slug').order('slug'),
+      supabase.from('humor_flavor_step_types').select('id, slug').order('slug'),
     ])
     setModels(m || [])
     setInputTypes(it || [])
@@ -495,7 +495,7 @@ export default function FlavorEditorPage() {
                           )}
                           {s.humor_flavor_step_type_id && (
                             <span className="text-xs px-2 py-0.5 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-full">
-                              {stepTypes.find(t => t.id === s.humor_flavor_step_type_id)?.name || 'step type'}
+                              {stepTypes.find(t => t.id === s.humor_flavor_step_type_id)?.slug || 'step type'}
                             </span>
                           )}
                           {s.llm_temperature != null && (
@@ -552,12 +552,12 @@ export default function FlavorEditorPage() {
                         <div className="flex gap-3 mt-2">
                           {s.llm_input_type_id && (
                             <span className="text-xs text-[var(--muted)]">
-                              in: {inputTypes.find(t => t.id === s.llm_input_type_id)?.name || s.llm_input_type_id}
+                              in: {inputTypes.find(t => t.id === s.llm_input_type_id)?.slug || s.llm_input_type_id}
                             </span>
                           )}
                           {s.llm_output_type_id && (
                             <span className="text-xs text-[var(--muted)]">
-                              out: {outputTypes.find(t => t.id === s.llm_output_type_id)?.name || s.llm_output_type_id}
+                              out: {outputTypes.find(t => t.id === s.llm_output_type_id)?.slug || s.llm_output_type_id}
                             </span>
                           )}
                         </div>
