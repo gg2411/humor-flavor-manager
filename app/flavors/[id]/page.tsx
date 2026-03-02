@@ -29,7 +29,7 @@ interface HumorFlavorStep {
 
 interface LLMModel { id: number; name: string }
 interface RefItem { id: number; slug: string }
-interface DBImage { id: string; url?: string; description?: string }
+interface DBImage { id: string; url?: string; image_description?: string }
 interface Caption { id: number; content: string; created_datetime_utc?: string }
 
 type Tab = 'steps' | 'test' | 'captions'
@@ -222,7 +222,7 @@ export default function FlavorEditorPage() {
 
   useEffect(() => {
     if (tab === 'test' && images.length === 0) {
-      supabase.from('images').select('id, url, description').order('id', { ascending: false }).limit(60)
+      supabase.from('images').select('id, url, image_description').order('id', { ascending: false }).limit(60)
         .then(({ data }) => setImages(data || []))
     }
   }, [tab, supabase, images.length])
@@ -611,7 +611,7 @@ export default function FlavorEditorPage() {
                         : 'border-transparent hover:border-violet-300 dark:hover:border-violet-700'
                     }`}>
                     {img.url ? (
-                      <Image src={img.url} alt={img.description || ''} fill className="object-cover" unoptimized />
+                      <Image src={img.url} alt={img.image_description || ''} fill className="object-cover" unoptimized />
                     ) : (
                       <div className="w-full h-full bg-[var(--background)] flex items-center justify-center text-xl">🖼️</div>
                     )}
