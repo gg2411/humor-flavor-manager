@@ -333,9 +333,16 @@ export default function FlavorEditorPage() {
         },
         body: JSON.stringify({ imageId: selectedImageId, humorFlavorId: flavorId }),
       })
-      const json = await res.json()
-      if (!res.ok) setTestError(json.message || JSON.stringify(json, null, 2))
-      else setTestResult(JSON.stringify(json, null, 2))
+      const text = await res.text()
+      let display: string
+      try {
+        const json = JSON.parse(text)
+        display = JSON.stringify(json, null, 2)
+      } catch {
+        display = text
+      }
+      if (!res.ok) setTestError(display)
+      else setTestResult(display)
     } catch (e) {
       setTestError(String(e))
     }
